@@ -100,7 +100,7 @@ app.directive('autocomplete', function() {
       $scope.wrappedSuggestions = [];
       $scope.$watchCollection('suggestions', function(newSuggestions){
         if(newSuggestions instanceof Array){
-          $scope.wrappedSuggestions = newSuggestions.map(function(suggestion){
+          $scope.wrappedSuggestions = newSuggestions.map(function(suggestion, counterIndex){
             var renderedText;
             if(typeof $scope.render === 'function'){
               renderedText = $scope.render(suggestion);
@@ -114,7 +114,8 @@ app.directive('autocomplete', function() {
             }
             return {
               text: renderedText,
-              data: suggestion
+              data: suggestion,
+              _id: ''+(counterIndex+1)
             };
           });
         }
@@ -239,7 +240,12 @@ app.directive('autocomplete', function() {
             index = scope.getIndex();
             // scope.preSelectOff();
             if(index !== -1) {
-              scope.select(angular.element(angular.element(this).find('li')[index]).text());
+              var jLiElement = angular.element(angular.element(this).find('li')[index]);
+              var suggestionId = jLiElement.attr('data-suggestion-id');
+              var suggestion = scope.wrappedSuggestions.filter(function(wrappedSuggestion){
+                return suggestionId == wrappedSuggestion._id;
+              })[0];
+              scope.select(suggestion);
               if(keycode == key.enter) {
                 e.preventDefault();
               }
@@ -280,6 +286,7 @@ app.directive('autocomplete', function() {
               ng-repeat="wrappedSuggestion in wrappedSuggestions | myFilter:searchFilter | orderBy:\'text\' track by $index"\
               index="{{ $index }}"\
               val="{{ wrappedSuggestion.text }}"\
+              data-suggestion-id="{{ wrappedSuggestion._id }}"\
               ng-class="{ active: ($index === selectedIndex) }"\
               ng-click="select(wrappedSuggestion)"\
               ng-bind-html="wrappedSuggestion.text | highlight:searchParam"></li>\
