@@ -1,7 +1,7 @@
 var app = angular.module('app', ['autocomplete']);
 
 // the service that retrieves some movie title from an url
-app.factory('MovieRetriever', function($http, $q, $timeout){
+app.factory('MovieRetriever', ['$http', '$q', '$timeout', function($http, $q, $timeout){
   var MovieRetriever = new Object();
 
   MovieRetriever.getmovies = function(i) {
@@ -22,9 +22,9 @@ app.factory('MovieRetriever', function($http, $q, $timeout){
   }
 
   return MovieRetriever;
-});
+}]);
 
-app.controller('MyCtrl', function($scope, MovieRetriever){
+app.controller('MyCtrl', ['$scope', 'MovieRetriever', function($scope, MovieRetriever){
 
   $scope.movies = MovieRetriever.getmovies("...");
   $scope.movies.then(function(data){
@@ -47,4 +47,4 @@ app.controller('MyCtrl', function($scope, MovieRetriever){
     console.log("Suggestion selected: " + suggestion );
   }
 
-});
+}]);
