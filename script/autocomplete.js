@@ -296,7 +296,7 @@ app.directive('autocomplete', function() {
 });
 
 
-app.filter('myFilter', function($filter){
+app.filter('myFilter', ['$filter', function($filter){
   return function(wrappedSuggestions, searchFilter){
     if(wrappedSuggestions instanceof Array){
       searchFilter = searchFilter || '';
@@ -317,7 +317,7 @@ app.filter('myFilter', function($filter){
       });
     }
   };
-});
+}]);
 
 
 app.filter('highlight', ['$sce', function ($sce) {
