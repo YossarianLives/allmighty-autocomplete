@@ -283,7 +283,7 @@ app.directive('autocomplete', function() {
           <ul ng-show="completing && (wrappedSuggestions | myFilter:searchFilter).length > 0">\
             <li\
               suggestion\
-              ng-repeat="wrappedSuggestion in wrappedSuggestions | myFilter:searchFilter | orderBy:\'text\' track by $index"\
+              ng-repeat="wrappedSuggestion in wrappedSuggestions | myFilter:searchFilter"\
               index="{{ $index }}"\
               val="{{ wrappedSuggestion.text }}"\
               data-suggestion-id="{{ wrappedSuggestion._id }}"\
