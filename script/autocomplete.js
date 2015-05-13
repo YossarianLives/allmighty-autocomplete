@@ -38,6 +38,7 @@ app.directive('autocomplete', function() {
 
       // watches if the parameter filter should be changed
       var watching = true;
+      var hasBeenSelected = false;
 
       // autocompleting drop down on/off
       $scope.completing = false;
@@ -57,7 +58,7 @@ app.directive('autocomplete', function() {
 
         // function thats passed to on-type attribute gets executed
         if($scope.onType)
-          $scope.onType($scope.searchParam);
+          $scope.onType($scope.searchParam, hasBeenSelected);
       });
 
       // for hovering over suggestions
@@ -93,6 +94,8 @@ app.directive('autocomplete', function() {
         watching = false;
         $scope.completing = false;
         setTimeout(function(){watching = true;},1000);
+        hasBeenSelected = true;
+        setTimeout(function(){hasBeenSelected = false;}, 1);
         $scope.setIndex(-1);
       };
 
