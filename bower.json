@@ -1,10 +1,10 @@
 {
   "name": "lienbcn-allmighty-autocomplete",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "ignore": [],
-  "homepage": "https://github.com/lienbcn/allmighty-autocomplete/",
+  "homepage": "https://github.com/YossarianLives/allmighty-autocomplete/",
   "authors": [
-    "Neil Sanz <nsblenin@gmail.com>"
+    "Rishi Tank"
   ],
   "description": "Simple to use autocomplete directive in a module for AngularJs!",
   "keywords": [
