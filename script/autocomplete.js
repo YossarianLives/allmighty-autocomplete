@@ -357,11 +357,11 @@ app.filter('highlight', ['$sce',
                 escapedWords.forEach(function(escapedWord) {
                     var wordPattern = '(?!<span[^>]*?>)(' + escapedWord + ')(?![^<]*?<\/span>)(?=[^>]*(<|$))'; //Match the escapedWord only if it's not already wrapped within span tags, and it's not part of an html attribute or tag name (from previous insertions of span tags into the input)
                     var wordRegexp = new RegExp(wordPattern, 'gi');
-                    input = input.replace(wordRegexp, "<span class=\"highlight\">$1</span>");
-                    input = "<img src=" + input.image + ">" + input;
+                    input.html = input.text.replace(wordRegexp, "<span class=\"highlight\">$1</span>");
+                    input.html = "<img src=" + input.image + ">" + input.html;
                 });
             }
-            return $sce.trustAsHtml(input);
+            return $sce.trustAsHtml(input.html);
         };
     }
 ]);
