@@ -310,7 +310,7 @@ app.directive('autocomplete', function() {
               data-suggestion-id="{{ wrappedSuggestion._id }}"\
               ng-class="{ active: ($index === selectedIndex) }"\
               ng-click="select(wrappedSuggestion)"\
-              ng-bind-html="wrappedSuggestion.text | highlight:searchParam"><img src="wrappedSuggestion.image"></li>\
+              ng-bind-html="wrappedSuggestion | highlight:searchParam"></li>\
           </ul>\
         </div>'
     };
@@ -348,16 +348,18 @@ app.filter('highlight', ['$sce',
         return function(input, searchParam) {
             if (typeof input === 'function') return '';
             if (searchParam) {
+                var term = searchParam.text;
                 //Hightlight the words or semiwords that are present in both the search and the suggestion:
                 var escapeRegexp = function(text) {
                     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
                 };
-                var words = searchParam.replace(/\ +/g, ' ').split(/\ /g);
+                var words = term.replace(/\ +/g, ' ').split(/\ /g);
                 var escapedWords = words.map(escapeRegexp); //Make sure non alphanumeric characters are escaped properly before constructing the regexp
                 escapedWords.forEach(function(escapedWord) {
                     var wordPattern = '(?!<span[^>]*?>)(' + escapedWord + ')(?![^<]*?<\/span>)(?=[^>]*(<|$))'; //Match the escapedWord only if it's not already wrapped within span tags, and it's not part of an html attribute or tag name (from previous insertions of span tags into the input)
                     var wordRegexp = new RegExp(wordPattern, 'gi');
                     input = input.replace(wordRegexp, "<span class=\"highlight\">$1</span>");
+                    input = "<img src=" + searchParam.image + ">" + input;
                 });
             }
             return $sce.trustAsHtml(input);
