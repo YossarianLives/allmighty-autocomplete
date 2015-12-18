@@ -25,9 +25,6 @@ app.directive('autocomplete', function() {
 
                 $scope.initLock = true;
 
-		$scope.onKeyUp = scope.onKeyUp;
-		$scope.onKeyDown = scope.onKeyDown;
-
                 // set new index
                 $scope.setIndex = function(i) {
                     $scope.selectedIndex = parseInt(i);
@@ -260,6 +257,7 @@ app.directive('autocomplete', function() {
                     case key.left:
                         break;
                     case key.right:
+                        break;
                     case key.enter:
                     case key.tab:
 
@@ -305,8 +303,8 @@ app.directive('autocomplete', function() {
             placeholder="{{ attrs.placeholder }}"\
             class="{{ attrs.inputclass }}"\
             id="{{ attrs.inputid }}"\
-	    ng-keyup="onKeyUp"\
-	    ng-keydown="onKeyDown"\
+	    ng-keyup="onKeyUp($event)"\
+	    ng-keydown="onKeyDown($event)"\
             ng-required="{{ autocompleteRequired }}" />\
           <ul ng-show="completing && (wrappedSuggestions | myFilter:searchFilter).length > 0">\
             <li\
