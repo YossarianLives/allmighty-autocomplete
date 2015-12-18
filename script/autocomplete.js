@@ -302,8 +302,8 @@ app.directive('autocomplete', function() {
             placeholder="{{ attrs.placeholder }}"\
             class="{{ attrs.inputclass }}"\
             id="{{ attrs.inputid }}"\
-	    ng-keyup="{{ onKeyUp }}"\
-	    ng-keydown="{{ onKeyDown }}"\
+	    ng-keyup="onKeyUp"\
+	    ng-keydown="onKeyDown"\
             ng-required="{{ autocompleteRequired }}" />\
           <ul ng-show="completing && (wrappedSuggestions | myFilter:searchFilter).length > 0">\
             <li\
